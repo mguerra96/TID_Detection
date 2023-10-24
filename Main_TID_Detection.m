@@ -23,7 +23,7 @@ time_of_interest=datetime(year,month,day,floor(time_of_interest),mod(time_of_int
 
 %% READ RINEX FILES, COMPUTE GFLC, FIND IPPS AND PREPARE ARC DB
 
-Need2Calibrate=exist(['C:\Users\MarcoGuerra\Documents\MATLAB\TID_detection\3.0\C_Backups\C_' num2str(year) '_' num2str(doy,'%03d') '.mat'],'file');
+Need2Calibrate=exist(['C:\Users\MarcoGuerra\Documents\MATLAB\TID_Detection\C_Backups\C_' num2str(year) '_' num2str(doy,'%03d') '.mat'],'file');
 
 tic
 C=Download_And_Calibrate(year,doy,Need2Calibrate,stat2keep,stat_sel);
@@ -44,6 +44,6 @@ toc
 
 fprintf('Detrending and extracting parameters...\n')
 
-C_tw=Moving_Win_TID_Detection(C,time_of_interest,1);
+C_tw=Moving_Win_TID_Detection(C,time_of_interest,1,0);
 toc
 

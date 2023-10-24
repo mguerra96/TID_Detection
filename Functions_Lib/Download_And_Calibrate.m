@@ -49,11 +49,11 @@ if Need2Calibrate==0
     %% READING CALIBRATION OUTPUT AND CREATING ARC DATABASE
 
     C=read_PIDCAL(30,output_dir);
-    save(['C:\Users\MarcoGuerra\Documents\MATLAB\TID_detection\3.0\C_Backups\C_' num2str(year) '_' num2str(doy,'%03d') '.mat'],'C')
+    save(['C:\Users\MarcoGuerra\Documents\MATLAB\TID_Detection\C_Backups\C_' num2str(year) '_' num2str(doy,'%03d') '.mat'],'C')
 
 else
     fprintf('Data matrix already available\n')
-    load(['C:\Users\MarcoGuerra\Documents\MATLAB\TID_detection\3.0\C_Backups\C_' num2str(year) '_' num2str(doy,'%03d') '.mat'])
+    load(['C:\Users\MarcoGuerra\Documents\MATLAB\TID_Detection\C_Backups\C_' num2str(year) '_' num2str(doy,'%03d') '.mat'])
 end
 
 end
