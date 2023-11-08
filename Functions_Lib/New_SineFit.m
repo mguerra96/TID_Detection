@@ -1,4 +1,4 @@
-function [off,amp,per,phase,prn,ae,rmse,rsquare]=New_SineFit(x,y,z,time_win)
+function [off,amp,per,phase,prn,ae,rmse,rsquare,real_amp]=New_SineFit(x,y,z,time_win)
 
 %This function fit a sinusoidal to the given dtec arc, and calculates the
 %rmse and absolute error between fit and real signal
@@ -11,13 +11,14 @@ mdl = fittype('off+amp*sin(2*pi*x/per+phase)','indep','x');
 fit_opt=fitoptions(mdl);
 fit_opt.Lower=[0.1 -0.05 seconds(time_win)*0.4 -inf];
 fit_opt.Upper=[5 0.05 seconds(time_win)*0.9 +inf];
-fit_opt.MaxFunEvals=1e5;
-fit_opt.MaxIter=1e5;
+fit_opt.MaxFunEvals=1e4;
+fit_opt.MaxIter=1e4;
 
 %fit model to data
 
 [fitted_mdl,gof] = fit(seconds(x-min(x)),y,mdl,fit_opt);
 
+real_amp=(abs(min(y))+max(y))/2;
 
 %preparing output
 

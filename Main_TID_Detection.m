@@ -2,24 +2,26 @@ clear
 close all
 clc
 
+
 %% DATABASE CREATION
 
 % LOAD LIST OF STATIONS OF INTEREST
 load stat_sel.mat
 
 % AMOUNT OF STATIONS TO CONSIDER OF THE GIVEN NETWORK
-stat2keep=5;
+stat2keep=6;
 
 % DATETIME TO STUDY AND TIME TO STUDY
 
-time_of_interest=18;
+time_of_interest=15;
 
-year=2017;
-month=9;
-day=8;
+year=2023;
+month=5;
+day=6;
 
 doy=date2doy(datenum([num2str(month) '/' num2str(day) '/' num2str(year)]));
 time_of_interest=datetime(year,month,day,floor(time_of_interest),mod(time_of_interest,1)*60,0);
+
 
 %% READ RINEX FILES, COMPUTE GFLC, FIND IPPS AND PREPARE ARC DB
 
@@ -44,6 +46,22 @@ toc
 
 fprintf('Detrending and extracting parameters...\n')
 
-C_tw=Moving_Win_TID_Detection(C,time_of_interest,1,0);
+C_tw=Moving_Win_TID_Detection(C,time_of_interest,1,1);
 toc
+
+
+%% TIME_WINDOW SELECTION FOR TID CHARACTERIZATION
+
+[C_out,TID]=TimeWin_Selection(C_tw);
+
+%% TID DETECTION OUTPUT
+
+if isempty(C_out)
+    fprintf('No TID Detected consistently in any time window\n')
+else
+    fprintf('TID Detected in %d PRNs:\n',TID.prns)
+    fprintf(['Period --> Mean: %d ' char(177) ' %d min \n'],[TID.period TID.period_std])
+    fprintf(['Amplitude --> Mean: %.2f ' char(177) ' %.2f TECu\n'],[TID.amp TID.amp_std])
+end
+
 
